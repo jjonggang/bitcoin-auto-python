@@ -55,7 +55,7 @@ bit = pybithumb.Bithumb(con_key, sec_key)
 # 변동폭 = 전일 고가 - 전일 저가
 # 매수타겟 = 전일종가 + 변동폭 * 0.5
 # 매도타겟 = 당일 종가 매도
-# #
+
 
 
 def get_yesterday_ma5(ticker):
@@ -89,7 +89,6 @@ def buy(ticker):
     sell_price = orderbook['asks'][0]['price']
     unit = 100000 / float(sell_price)
     order = bit.buy_market_order(ticker, unit)
-    # f.write(datetime.datetime.now(), ticker, "구매 성공!!\n", order)
     f.write("-------------------------------------------")
     f.write(f'{datetime.datetime.now()} {ticker}구매 성공!!\n {order}')
     f.write(f'target price: {coin_dict[ticker][0]} ma5: {coin_dict[ticker][1]}')
@@ -134,10 +133,6 @@ while True:
             target_set(coin_dict)
             for coinbuy in buy_array:
                 sell(coinbuy)
-                # print("판매")
-            # # sell("BTC")
-            # print(coin, "판매")
-        # print(target_price)
         target_price = coin_dict[coin][0]
         print(coin, "목표가", target_price)
         ma5 = coin_dict[coin][1]
@@ -146,8 +141,5 @@ while True:
         print(coin, "현재가", current_price)
         if current_price > target_price and current_price > ma5:
             buy(coin)
-
-            # # buy("BTC")
-            # print("구매")
             buy_array.append(coin)
         print()
