@@ -3,8 +3,8 @@ import datetime
 import pybithumb
 import time
 
-con_key = "78c01342b0d7f3cc427f01b3dfb193ff"
-sec_key = "582de94c6b618b51ef043420894bd3bb"
+con_key = ""
+sec_key = ""
 
 bit = pybithumb.Bithumb(con_key, sec_key)
 
