@@ -2,6 +2,8 @@ import datetime
 
 import pybithumb
 import time
+from playsound import playsound
+
 
 con_key = ""
 sec_key = ""
@@ -57,7 +59,6 @@ bit = pybithumb.Bithumb(con_key, sec_key)
 # 매도타겟 = 당일 종가 매도
 
 
-
 def get_yesterday_ma5(ticker):
     df = bit.get_candlestick(ticker)
     close = df['close']
@@ -84,10 +85,13 @@ def sell(ticker):
 
 
 def buy(ticker):
+    playsound('done.wav')
+    print("buy", ticker)
+    f.write(f'{ticker}를 사세요!!')
     krw = bit.get_balance(ticker)[2]
     orderbook = bit.get_orderbook(ticker)
     sell_price = orderbook['asks'][0]['price']
-    unit = 100000 / float(sell_price)
+    unit = 200000 / float(sell_price)
     order = bit.buy_market_order(ticker, unit)
     f.write("-------------------------------------------")
     f.write(f'{datetime.datetime.now()} {ticker}구매 성공!!\n {order}')
@@ -109,8 +113,11 @@ f = open('./record.txt', 'w')
 now = datetime.datetime.now()
 mid = datetime.datetime(now.year, now.month, now.day) + datetime.timedelta(1)
 # target_price = get_target_price("BTC")
-coin_array = ["XEC", "FIT", "AMO", "OBSR", "TEMCO", "BASIC", "EL", "EGG", "QTCON", "WIKEN", "MIX", "TRV", "CKB", "COS", "MVC", "FLETA", "MAP", "BLY", "RSR", "APM", "ANW", "ADP", "GOM2", "LINA", "ATOLO"]
-coin_dict = {"XEC":[0,0], "FIT":[0,0], "AMO":[0,0], "OBSR":[0,0], "TEMCO":[0,0], "BASIC":[0,0], "EL":[0,0], "EGG":[0,0], "QTCON":[0,0], "WIKEN":[0,0], "MIX":[0,0], "TRV":[0,0], "CKB":[0,0], "COS":[0,0], "MVC":[0,0], "FLETA":[0,0], "MAP":[0,0], "BLY":[0,0], "RSR":[0,0],"APM":[0,0], "ANW":[0,0], "ADP":[0,0], "GOM2":[0,0], "LINA":[0,0], "ATOLO":[0,0], "RINGX":[0,0], "IPX":[0,0], "TRX":[0,0], "ZIL":[0,0], "GHX":[0,0], "EVZ":[0,0], "VET":[0,0], "LOOM":[0,0], "XNO":[0,0], "ASM":[0,0], "BIOT":[0,0], "CYCLUB":[0,0], "CENNZ":[0,0], "DOGE":[0,0], "DAD":[0,0], "XYM":[0,0], "XLM":[0,0], "LF":[0,0], "CHZ":[0,0], "CTXC":[0,0], "SOFI":[0,0], "ORC":[0,0], "CRO":[0,0], "GRT":[0,0], "CHR":[0,0], "ANV":[0,0], "XRP":[0,0], "BORA":[0,0], "PUNDIX":[0,0], "BAT":[0,0], "KLAY":[0,0], "MLK":[0,0], "ADA":[0,0], "ALGO":[0,0], "HIVE":[0,0], "UOS":[0,0], "GXC":[0,0], "MATIC":[0,0], "ENJ":[0,0], "EOS":[0,0], "MANA":[0,0], "XTZ":[0,0], "SAND":[0,0], "WEMIX":[0,0], "ALICE":[0,0], "XVS":[0,0], "LINK":[0,0], "ATOM":[0,0], "DOT":[0,0], "ETC":[0,0]}
+coin_array = ["XEC", "FIT", "AMO", "OBSR", "TEMCO", "BASIC", "EL", "EGG", "QTCON", "WIKEN", "MIX", "TRV", "CKB", "COS", "MVC", "FLETA", "MAP", "BLY", "RSR", "APMAPM", "ANW", "ADP", "GOM2", "LINA", "ATOLO"]
+# coin_dict = {"XEC":[0,0], "FIT":[0,0], "AMO":[0,0], "OBSR":[0,0], "TEMCO":[0,0], "BASIC":[0,0], "EL":[0,0], "EGG":[0,0], "QTCON":[0,0], "WIKEN":[0,0], "MIX":[0,0], "TRV":[0,0], "CKB":[0,0], "COS":[0,0], "MVC":[0,0], "FLETA":[0,0], "MAP":[0,0], "BLY":[0,0], "RSR":[0,0],"APM":[0,0], "ANW":[0,0], "ADP":[0,0], "GOM2":[0,0], "LINA":[0,0], "ATOLO":[0,0], "RINGX":[0,0], "IPX":[0,0], "TRX":[0,0], "GHX":[0,0], "EVZ":[0,0], "VET":[0,0], "LOOM":[0,0], "XNO":[0,0], "ASM":[0,0], "BIOT":[0,0], "CYCLUB":[0,0], "CENNZ":[0,0], "DOGE":[0,0], "XYM":[0,0], "XLM":[0,0], "LF":[0,0], "CHZ":[0,0], "CTXC":[0,0], "SOFI":[0,0], "ORC":[0,0], "CRO":[0,0], "GRT":[0,0], "CHR":[0,0], "ANV":[0,0], "XRP":[0,0], "BORA":[0,0], "PUNDIX":[0,0], "BAT":[0,0], "KLAY":[0,0], "MLK":[0,0], "ADA":[0,0], "ALGO":[0,0], "HIVE":[0,0], "UOS":[0,0], "GXC":[0,0], "MATIC":[0,0], "ENJ":[0,0], "EOS":[0,0], "MANA":[0,0], "XTZ":[0,0], "SAND":[0,0], "WEMIX":[0,0], "ALICE":[0,0], "XVS":[0,0], "LINK":[0,0], "ATOM":[0,0], "DOT":[0,0], "ETC":[0,0]}
+coin_dict = {"XEC":[0,0], "FIT":[0,0], "AMO":[0,0], "OBSR":[0,0], "TEMCO":[0,0], "BASIC":[0,0], "EL":[0,0], "EGG":[0,0], "QTCON":[0,0], "WIKEN":[0,0], "MIX":[0,0], "TRV":[0,0], "CKB":[0,0], "COS":[0,0], "MVC":[0,0], "FLETA":[0,0], "MAP":[0,0], "BLY":[0,0], "RSR":[0,0],"APM":[0,0], "ANW":[0,0], "ADP":[0,0], "GOM2":[0,0], "LINA":[0,0], "ATOLO":[0,0], "RINGX":[0,0], "IPX":[0,0], "TRX":[0,0], "ZIL":[0,0], "GHX":[0,0], "EVZ":[0,0], "VET":[0,0], "LOOM":[0,0], "XNO":[0,0], "ASM":[0,0], "BIOT":[0,0], "CYCLUB":[0,0], "CENNZ":[0,0], "DOGE":[0,0], "XYM":[0,0], "XLM":[0,0], "LF":[0,0], "CHZ":[0,0], "CTXC":[0,0], "SOFI":[0,0], "ORC":[0,0], "CRO":[0,0], "GRT":[0,0], "CHR":[0,0], "ANV":[0,0], "XRP":[0,0], "BORA":[0,0], "PUNDIX":[0,0], "BAT":[0,0], "KLAY":[0,0], "MLK":[0,0], "ADA":[0,0], "ALGO":[0,0], "HIVE":[0,0], "UOS":[0,0], "GXC":[0,0], "MATIC":[0,0], "ENJ":[0,0], "EOS":[0,0], "MANA":[0,0], "XTZ":[0,0], "SAND":[0,0], "WEMIX":[0,0], "ALICE":[0,0], "XVS":[0,0], "LINK":[0,0], "ATOM":[0,0], "DOT":[0,0], "ETC":[0,0], "DAD":[0,0]}
+# coin_dict = {"NEAR":[0,0], "SAND":[0,0], "SXP":[0,0], "MATIC":[0,0], "ICX":[0,0], "STX":[0,0], "BTT":[0,0], "MANA":[0,0], "DOGE":[0,0], "PLA":[0,0], "BAT":[0,0], "SOL":[0,0], "ADA":[0,0], "GRS":[0,0], "BORA":[0,0], "ALGO":[0,0], "VET":[0,0], "HUM":[0,0], "HIVE":[0,0],"EOS":[0,0], "DOT":[0,0], "WAXP":[0,0], "NU":[0,0], "LINK":[0,0], "TRX":[0,0], "KAVA":[0,0], "ATOM":[0,0], "IOTA":[0,0], "MLK":[0,0], "ETC":[0,0], "LSK":[0,0], "1INCH":[0,0], "XLM":[0,0]}
+
 buy_array = []
 
 ma5_set(coin_dict)
@@ -142,4 +149,4 @@ while True:
         if current_price > target_price and current_price > ma5:
             buy(coin)
             buy_array.append(coin)
-        print()
+        time.sleep(0.05)
